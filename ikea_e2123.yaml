@@ -1,0 +1,187 @@
+blueprint:
+  name:  Controller - IKEA E2123 - SYMFONISIK Remote gen 2
+  description: Automation for executing any kind of action triggered by the provided IKEA E2123 Remote control.
+  domain: automation
+
+  input:
+    symfonisk_remote:
+      name: (Required) Controler
+      description: This remote will be used in the automation.
+      selector:
+        device:
+    Play:
+      name: (Optional) Play Button
+      description: Action to run on Play button press
+      default:
+      selector:
+        action:
+    +:
+      name: (Optional) + Button
+      description: Action to run on + button short press.
+      default:
+      selector:
+        action:
+    + Long press :
+      name: (Optional) + Long press
+      description: Action to run on + button long press.
+      default:
+      selector:
+        action:
+    -:
+      name: "(Optional) - Button"
+      description: Action to run on - button short press.
+      default:
+      selector:
+        action:
+    "- Long press":
+      name: "(Optional) - Long press"
+      description: Action to run on - button long press.
+      default:
+      selector:
+        action:
+    Next:
+      name: (Optional) Next Button
+      description: Action to run on Next button press.
+      default:
+      selector:
+        action:
+    Previus:
+      name: (Optional) Previus Button
+      description: Action to run on Previus button press.
+      default:
+      selector:
+        action:
+    Shortcut 1:
+      name: (Optional) Shortcut 1 Button
+      description: Action to run on Shortcut 1 button press.
+      default:
+      selector:
+        action:
+    Shortcut 2:
+      name: (Optional) Shortcut 2 Button
+      description: Action to run on Shortcut 2 button press.
+      default:
+      selector:
+        action:
+
+trigger:
+  - device_id: !input symfonisk_remote
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: toggle
+    alias: Play
+    id: Play
+  - device_id: !input symfonisk_remote
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: dim_up
+    alias: +
+    id: +
+  - device_id: !input symfonisk_remote
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_up
+    alias: + Long press
+    id: + Long press
+  - device_id: !input symfonisk_remote
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: dim_down
+    alias: "-"
+    id: "-"
+  - device_id: !input symfonisk_remote
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_down
+    alias: "- Long press"
+    id: " - Long press"
+  - device_id: !input symfonisk_remote
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: right
+    alias: Next
+    id: Next
+  - device_id: !input symfonisk_remote
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: left
+    alias: Previus
+    id: Previus
+  - device_id: !input symfonisk_remote
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: button_1
+    alias: Shortcut 1
+    id: Shortcut 1
+  - device_id: !input symfonisk_remote
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: button_2
+    alias: Shortcut 2
+    id: Shortcut 2
+
+action:
+  choose:
+  - conditions:
+      - condition: trigger
+        id: Play
+        alias: Play
+    sequence:
+      !input Play
+  - conditions:
+      - condition: trigger
+        id: +
+        alias: +
+    sequence:
+      !input +
+  - conditions:
+      - condition: trigger
+        id: + Long press
+        alias: + Long press
+    sequence:
+      !input + Long press
+  - conditions:
+      - condition: trigger
+        id: "-"
+        alias: "-"
+    sequence:
+      !input "-"
+  - conditions:
+      - condition: trigger
+        id: " - Long press"
+        alias: "- Long press"
+    sequence:
+      !input "- Long press"
+  - conditions:
+      - condition: trigger
+        id: Next
+        alias: Next
+    sequence:
+      !input Next
+  - conditions:
+      - condition: trigger
+        id: Previus
+        alias: Previus
+    sequence:
+      !input Previus
+  - conditions:
+      - condition: trigger
+        id: Shortcut 1
+        alias: Shortcut 1
+    sequence:
+      !input Shortcut 1
+  - conditions:
+      - condition: trigger
+        id: Shortcut 2
+        alias: Shortcut 2
+    sequence:
+      !input Shortcut 2
